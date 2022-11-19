@@ -21,7 +21,7 @@ class UserController extends Controller
     public function user(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id'   => ['required', "exists:users"]
+            'id'   => ['required', "exists:users,id,deleted_at,NULL"]
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id'              => ['required', 'exists:users'],
+            'id'              => ['required', 'exists:users,id,deleted_at,NULL'],
             'user_name'       => ['unique:users', 'string', 'max:255'],
             'date_of_birth'   => ['date', 'before:today'],
             'phone_number'    => ['unique:users', new PhoneNumber,'between:6,18'],
