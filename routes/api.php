@@ -28,4 +28,4 @@ Route::prefix('users')->group(function () {
 
 Route::get('problem-one', [ProblemSolvingController::class, 'problemOne']);
 Route::get('problem-two', [ProblemSolvingController::class, 'problemTwo']);
-Route::get('problem-three', [ProblemSolvingController::class, 'problemThree']);
+Route::post('problem-three', [ProblemSolvingController::class, 'problemThree']);

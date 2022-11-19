@@ -97,6 +97,40 @@ class ProblemSolvingController extends Controller
 
     public function problemThree(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'Q.*' => ['required', 'numeric', 'between:1,10000'],
+        ]);
 
+        if ($validator->fails()) {
+            return $validator->messages();
+        }
+        
+        $result = [];
+        foreach ($request->Q as $key => $num) {
+            $result[$key] = $this->reduceNumbertoZero($num);
+        }
+        $response['OUTPUT'] = $result;
+        return response()->json($response);
     }
+
+    protected function reduceNumbertoZero($num) 
+    {
+        $steps = 0;
+        while (0 < $num) {
+            if($num % 2 == 0){
+                $num = $num - ($num / 2);
+                $steps++;
+            } elseif ($num % 3 == 0) {
+                $num = $num - ($num / 3);
+                $steps++;
+            } elseif ($num % 5 == 0) {
+                $num = $num - ($num / 5);
+                $steps++;
+            } else {
+                $num--;
+                $steps++;
+            }
+        }
+        return $steps;
+    } 
 }
